@@ -3,6 +3,7 @@ package com.example.sample1app;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,11 @@ public class Sample1appApplication {
 				</html>
 				""";
 		return content;
+	}
+
+	@Bean
+	public Post post() {
+		return new Post(0, 0, "Dummy", "This is dummy post.");
 	}
 
 

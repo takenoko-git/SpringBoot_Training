@@ -8,10 +8,63 @@
             rel="stylesheet">
     </head>
     <body class="container">
-        <h1 class="display-4 mb-4">Hello page</h1>
-        {{#fn}}
-        <h6>{{title}}</h6>
-        <p>{{msg}}</p>
-        {{/fn}}
+        <h1 class="display-4 mb-4" th:text="${title}"></h1>
+        <p th:text="${msg}"></p>
+        
+        <form method="post" action="/" th:object="${formModel}">
+            <style>.err { color:red }</style>
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text" class="form-control"
+                    name="name" th:value="*{name}" th:errorclass="err" />
+                <div th:if="${#fields.hasErrors('name')}"
+                    th:errors="*{name}" th:errorclass="err">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Mail</label>
+                <input type="text" class="form-control"
+                    name="mail" th:value="*{mail}" th:errorclass="err" />
+                <div th:if="${#fields.hasErrors('mail')}"
+                    th:errors="*{mail}" th:errorclass="err">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="name" class="form-label">Age</label>
+                <input type="number" class="form-control"
+                    name="age" th:value="*{age}" th:errorclass="err" />
+                <div th:if="${#fields.hasErrors('age')}"
+                    th:errors="*{age}" th:errorclass="err">
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="memo" class="form-label">Memo</label>
+                <textarea class="form-control"
+                    name="memo" th:text="*{memo}" th:errorclass="err"></textarea>
+                <div th:if="${#fields.hasErrors('memo')}"
+                    th:errors="*{memo}" th:errorclass="err">
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </form>
+
+        <table class="table">
+            <thead>
+                <tr><th>ID</th><th>Name</th><th>Mail</th><th>Age</th><th>Message</th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="item: ${data}">
+                    <td th:text="${item.id}"></td>
+                    <td th:text="${item.name}"></td>
+                    <td th:text="${item.mail}"></td>
+                    <td th:text="${item.age}"></td>
+                    <td>
+                        <ul th:each="msg : ${item.messages}">
+                            <li th:text="${msg.content}"></li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>
